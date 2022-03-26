@@ -12,7 +12,7 @@ from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
-
+from app1.models import Resume
 
 
 # Create your views here.
@@ -105,11 +105,14 @@ def drawRuler(pdf):
         pdf.drawString(10,y, 'y'+str(y))
 
 def GetPDF(request):
+    user1 = Resume.objects.get(user = request.user)
+    print(f"user =  {user1}")
     fileName = 'SomePDFName.pdf'
     resumeName = 'Randall Fowler'
     contactInfo = '(530)420-6969'
     #subject object
-    subject = ['Education']
+    subject = user1.school
+    print(subject)
     date = ['Fall 2019 - Spring 2022']
     description = ['Bachelors of Science, Computer Science - California State University, Chico\nGraduation expected in Spring 2023\nChico GPA: 3.66\nDean\'s list Spring 2021, Fall 2021']
     #description = "\n".join(wrap(description, 500))
@@ -117,10 +120,19 @@ def GetPDF(request):
     subjDividerY = [200]
 
     # Education Subject Entries
-    EdSub1 = Sub("Bachelors at some school",14,"Some day",10,"A\nbunch\nof words..",12)
+    EdSub1 = Sub(subject,14,user1.startYear,10,user1.academAchieve,12)
     #Education = Subject("Education",[EdSub1,EdSub1])
+    ExSub1 = Sub(user1.employerName,14,user1.employerName,10,user1.academAchieve,12)
+    SkSub1 = Sub(user1.skills,14,user1.startYear,10,user1.academAchieve,12)
+    ASub1 = Sub(user1.extraCariculars,14,user1.startYear,10,user1.academAchieve,12)
+    PSub1 = Sub(user1.projectName,14,user1.startYear,10,user1.academAchieve,12)
+    
     Education = Subject("Education",[EdSub1])
-    subjects = [Education,Education,Education,Education,Education]
+    Expierence = Subject("Expierence",[ExSub1])
+    Skills = Subject("Skills",[SkSub1])
+    Awards = Subject("Awards",[ASub1])
+    Projects = Subject("Projects",[PSub1])
+    subjects = [Education, Expierence,Skills,Awards,Projects]
 
     #create byte stream buffer
     buf = io.BytesIO()
