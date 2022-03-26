@@ -58,7 +58,7 @@ def join(request):
             user = join_form.save()
             user.set_password(user.password)
             user.save()
-            return redirect("/")
+            return redirect("/login/")
         else:
             page_data = { "join_form": join_form }
             return render(request, 'app1/join.html', page_data)
