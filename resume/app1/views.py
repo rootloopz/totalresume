@@ -40,6 +40,7 @@ class CreateMasterResume(forms.Form):
     projectDesc = forms.CharField(label="description")
 
 # Create your views here.
+@login_required
 def NewResume(request):
     if request.method == "POST":
         form = CreateMasterResume(request.POST)
