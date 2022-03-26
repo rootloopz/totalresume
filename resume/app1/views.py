@@ -122,7 +122,7 @@ def GetPDF(request):
     # Education Subject Entries
     EdSub1 = Sub(subject,14,user1.startYear,10,user1.academAchieve,12)
     #Education = Subject("Education",[EdSub1,EdSub1])
-    ExSub1 = Sub(user1.employerName,14,user1.employerName,10,user1.academAchieve,12)
+    ExSub1 = Sub(user1.employerName,14,user1.jobStartYear,10,user1.academAchieve,12)
     SkSub1 = Sub(user1.skills,14,user1.startYear,10,user1.academAchieve,12)
     ASub1 = Sub(user1.extraCariculars,14,user1.startYear,10,user1.academAchieve,12)
     PSub1 = Sub(user1.projectName,14,user1.startYear,10,user1.academAchieve,12)
@@ -162,11 +162,11 @@ def GetPDF(request):
     subjectTitleX = 200 #constant
     subjectTitleY = 120
     subTitleX = 40 #constant
-    subTitleY = subjectTitleY + 30
+    subTitleY = subjectTitleY + 15
     dateX = 440 #constant
     #dateY should be same as subTitleY
     descX = 40  #constant
-    descY = subTitleY + 30
+    descY = subTitleY + 10
     subjectText = pdf.beginText()
     for subject in subjects:
         #Grab Subject: print title
@@ -188,10 +188,14 @@ def GetPDF(request):
             subjectText.setTextOrigin(descX,descY)
             subjectText.textLines(sub.desc)
             #change iter for entry
-            subTitleY = subTitleY + 90
+            subTitleY = descY + 50
             descY = subTitleY + 10
-        subjectTitleY = subjectTitleY + len(subject.entries)*100
-        descY = subTitleY + 30
+                #subTitleY = subTitleY + 70
+                #descY = subTitleY + 10
+        #subjectTitleY = descY + len(subject.entries)*80
+        subjectTitleY = descY
+        subTitleY = subjectTitleY + 15
+        descY = subTitleY + 10
         #pdf.line(20,subjectTitleY-25,592,subjectTitleY-25)
         pdf.drawText(subjectText)
 
