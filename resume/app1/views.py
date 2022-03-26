@@ -105,10 +105,10 @@ def drawRuler(pdf):
     pdf.setLineWidth(1)
     pdf.setStrokeColorRGB(0.54,0.54,0.54)
     for x in range(0,610,100):
-        pdf.line(x,0,x,900) #draw horizontal lines
+        pdf.line(x,0,x,900) #draw vertical lines
         pdf.drawString(x,10, 'x'+str(x))
     for y in range(0,900,100):
-        pdf.line(0,y,610,y) #draw vertical lines
+        pdf.line(0,y,610,y) #draw horizontal lines
         pdf.drawString(10,y, 'y'+str(y))
 
 def GetPDF(request):
@@ -116,9 +116,10 @@ def GetPDF(request):
     resumeName = 'Randall Fowler'
     contactInfo = '(916)856-4946'
     #subject object
-    title = 'Education'
-    date = 'Fall 2019 - Spring 2022'
-    description = 'Eat shit at Chico State lol.'
+    subject = ['Education']
+    date = ['Fall 2019 - Spring 2022']
+    description = ['Bachelors of Science, Computer Science - California State University, Chico\nGraduation expected in Spring 2023\nChico GPA: 3.66\nDean\'s list Spring 2021, Fall 2021']
+    placement = [[40,120]]
 
     #create byte stream buffer
     buf = io.BytesIO()
@@ -128,7 +129,7 @@ def GetPDF(request):
     # 1) Draw Grid
     drawRuler(pdf)  #used for creating templates
     
-    # 2) Set text Objects
+    # 2) Top Portion
     titleText = pdf.beginText()
     titleText.setTextOrigin(200,50)
     lines = [resumeName,contactInfo]
@@ -137,6 +138,37 @@ def GetPDF(request):
         titleText.setFont("Helvetica",fonts[i])
         titleText.textLine(lines[i])
     pdf.drawText(titleText)
+
+    # 3) Divider from top
+    pdf.setStrokeColorRGB(0,0,0)
+    titleDivideLineY = 90
+    pdf.line(0,titleDivideLineY,630,titleDivideLineY)
+
+    # 4) Main content
+    for i in range(len(subject)):
+        subjectText = pdf.beginText()
+        titleOffsetX = 200
+        subjectText.setTextOrigin(placement[i][0]+titleOffsetX,placement[i][1])
+        subjectText.setFont("Helvetica",20)
+        subjectText.textLine(subject[i])
+
+        mainOffsetY = 30
+        dateOffsetX = 420
+        subjectText.setTextOrigin(placement[i][0]+dateOffsetX,placement[i][1]+mainOffsetY)
+        subjectText.setFont("Helvetica",12)
+        subjectText.textLine(date[i])
+
+        description
+        subjectText.setTextOrigin(placement[i][0],placement[i][1]+mainOffsetY)
+        #subjectText.setFont("Helvetica",12)
+        subjectText.textLine(description[i])
+
+        pdf.drawText(subjectText)
+
+
+
+
+
 
 
 
