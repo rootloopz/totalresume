@@ -2,12 +2,15 @@
 <html lang="en">
     <head>
         <title>
+            create an account
         </title>
     </head>
     <body>
+        <h1>Create Account</h1>
         <form action="" method="post"> 
             {% csrf_token %}
-            {{form.as_ul}}
+            {{form}}
+            <input type="submit">
              
         </form>
     </body>
