@@ -1,9 +1,73 @@
 {% extends "app1/pageTemplate.html" %}
 
 {% block body %}
-    <form action="" method="post"> 
+    <form action="submit" method="post"> 
         {% csrf_token %}
-        {{form.as_ul}}
-             
+        <div>
+        <h2>School</h2>
+        <label>Start Year - End Year</label>
+        {{ form.Syear}}
+        <label> - </label>
+        {{ form.Eyear}}
+        <p> </p>
+        <label>School Name:</label>
+        {{form.school}}
+        <p> </p>
+        <label>GPA:</label>
+        {{form.gpa}}
+        <p> </p>
+        <label>Enter Your Achievements:</label>
+        {{form.academAchieve}}
+        <p> </p>
+        <button type="button" class="btn btn-primary" id="add School">add School</button>
+    </div>
+
+    <div>
+        <h2>Work Experience</h2>
+        <label>Start year - End year</label>
+        {{ form.jobSyear}}
+        <label> - </label>
+        {{ form.jobEyear}}
+        <p> </p>
+        <label>Employer Name:</label>
+        {{form.employerName}}
+        <p> </p>
+        <label>Location:</label>
+        {{form.location}}
+        <p> </p>
+        <button type="button" class="btn btn-primary" id="add Job">add Job</button>
+    </div>
+    
+    <div>
+        <h2>Skills</h2>
+        <label>Skills:</label>
+        {{ form.skills}}
+        <p> </p>
+        <button type="button" class="btn btn-primary" id="add Skill">add Skill</button>
+    </div>
+
+    <div>
+        <h2>Activities and extracurriculars </h2>
+    
+        <label>Activities:</label>
+        {{form.Activities}}
+        <p> </p>
+        <label>Extracurricular Activities:</label>
+        {{form.extraCariculars}}
+        <p> </p>
+        <button type="button" class="btn btn-primary" id="add Activities">add Activities</button>
+    </div>
+
+    <div>
+        <h2>Projects</h2>
+        <label>Project Name:</label>
+        {{form.projectName}}
+        <p> </p>
+        <label>Project Description:</label>
+        {{form.projectDesc}}
+        <p> </p>
+        <button type="button" class="btn btn-primary" id="add Project">add Project</button>
+    </div>
+
     </form>
 {% endblock%}
