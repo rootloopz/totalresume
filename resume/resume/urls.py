@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('join/', app1_views.join),
     path('login/', app1_views.user_login),
-    path('logout/', app1_views.user_logout)
+    path('logout/', app1_views.user_logout),
+    path('create_pdf/', app1_views.GetPDF),
 ]
