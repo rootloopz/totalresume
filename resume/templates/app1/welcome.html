@@ -1,5 +1,6 @@
 {% extends "app1/pageTemplate.html" %}
 {% block body %}
+    {% load static %}
         <div class="container">
             <div class="jumbotron m-3">
                 <h1 class="display-4">Master resume builder</h1>
@@ -8,5 +9,7 @@
             </div>
             {% comment %} Test button for pdf {% endcomment %}
             <a class="btn btn-primary" href="/create_pdf" role="button">Create PDF</a>
+            <p> </p>
+            <img src="{%static '/app1/unemployedman.jpg'%}" alt="Job Man gets a Job">
         </div>
 {% endblock %}
