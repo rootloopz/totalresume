@@ -1,17 +1,5 @@
-{%load static%}
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome Page</title>
-        {% include "app1/bootstrap.html" %}
-    </head>
-    <body>
-      
-        {% include "app1/welcome_nav.html" %}
+{% extends "app1/pageTemplate.html" %}
+{% block body %}
 
         <div class="container">
             <div class="jumbotron m-3">
@@ -20,10 +8,4 @@
                 <hr class="my-4">
             </div>
         </div>
-
-        
-
-
-
-    </body>
-</html>
+{% endblock %}
