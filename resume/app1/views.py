@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django import forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from app1.forms import JoinForm, LoginForm, CreateMasterResume
+from app1.forms import JoinForm, LoginForm, resumeForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
@@ -18,11 +18,14 @@ from reportlab.lib.pagesizes import letter
 # Create your views here.
 @login_required
 def NewResume(request):
-    if request.method == "POST":
-        form = CreateMasterResume(request.POST)
-    return render(request, "app1/NewResumeForm.html",{
-        "form": CreateMasterResume()
-    })
+    context = {}
+    form = resumeForm(request.POST or None, request.FILES or None)
+
+    if form.is_valid():
+        form.save()
+
+    context['form'] = form
+    return render(request, 'app1/test.html', context)
 
 def homepage(request):
     return render(request, "app1/welcome.html")
