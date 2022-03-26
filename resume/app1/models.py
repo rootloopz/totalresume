@@ -7,12 +7,12 @@ class Resume(models.Model):
     startYear = models.CharField(max_length = 4)#start year
     endYear =  models.CharField(max_length = 4)#end year
     school = models.CharField(max_length = 100)
-    gpa = models.FloatField()
+    gpa = models.CharField(max_length = 4)
     academAchieve = models.CharField(max_length = 300)
 
     #job information
-    jobStartYear = models.DateField()
-    jobEndYear =  models.DateField()
+    jobStartYear = models.CharField(max_length = 10)
+    jobEndYear =  models.CharField(max_length = 10)
     employerName = models.CharField(max_length = 100)
     location = models.CharField(max_length = 100)
 
