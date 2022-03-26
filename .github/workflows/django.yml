@@ -30,4 +30,4 @@ jobs:
           SECRET_KEY: 25th2&@y@#as^bo_kv(sr-4k@j@96%*na3@d6d2fp@hz4(&t%@
       run: |
         cd resume/
-        python manage.py runserver
+        python manage.py test app1
