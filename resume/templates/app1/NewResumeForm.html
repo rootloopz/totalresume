@@ -1,7 +1,7 @@
 {% extends "app1/pageTemplate.html" %}
 
 {% block body %}
-    <form action="submit" method="post"> 
+    <form action="new_resume" method="post"> 
         {% csrf_token %}
         <div>
         <h2>School</h2>
@@ -68,6 +68,6 @@
         <p> </p>
         <button type="button" class="btn btn-primary" id="add Project">add Project</button>
     </div>
-
+    <input type="submit" class="btn btn-danger" value = "new_resume"/>
     </form>
 {% endblock%}
