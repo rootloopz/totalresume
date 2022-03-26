@@ -101,21 +101,58 @@ def user_logout(request):
     return redirect("/")
 
 ###Randall's Stuff###
+def drawRuler(pdf):
+    pdf.setLineWidth(1)
+    pdf.setStrokeColorRGB(0.54,0.54,0.54)
+    for x in range(0,610,100):
+        pdf.line(x,0,x,900) #draw horizontal lines
+        pdf.drawString(x,10, 'x'+str(x))
+    for y in range(0,900,100):
+        pdf.line(0,y,610,y) #draw vertical lines
+        pdf.drawString(10,y, 'y'+str(y))
+
 def GetPDF(request):
+    fileName = 'SomePDFName.pdf'
+    resumeName = 'Randall Fowler'
+    contactInfo = '(916)856-4946'
+    #subject object
+    title = 'Education'
+    date = 'Fall 2019 - Spring 2022'
+    description = 'Eat shit at Chico State lol.'
+
     #create byte stream buffer
     buf = io.BytesIO()
     #Create canvas
-    c = canvas.Canvas(buf, pagesize=letter,bottomup=0)
+    pdf = canvas.Canvas(buf, pagesize=letter,bottomup=0)
+
+    # 1) Draw Grid
+    drawRuler(pdf)  #used for creating templates
+    
+    # 2) Set text Objects
+    titleText = pdf.beginText()
+    titleText.setTextOrigin(200,50)
+    lines = [resumeName,contactInfo]
+    fonts = [20,10]
+    for i in range(len(lines)):
+        titleText.setFont("Helvetica",fonts[i])
+        titleText.textLine(lines[i])
+    pdf.drawText(titleText)
+
+
+
     #Create text object
-    textob = c.beginText()
-    textob.setTextOrigin(inch,inch)
-    textob.setFont("Helvetica", 14)
+    #textob = pdf.beginText()
+    #textob.setTextOrigin(inch,inch)
+    #textob.setFont("Helvetica", 14)
     #Add lines of text
-    lines = ["This is line 1","This is line 2","This is line 3",]
-    for line in lines:
-        textob.textLine(line)
-    c.drawText(textob)
-    c.showPage()
-    c.save()
+    #lines = ["This is line 1","This is line 2","This is line 3",]
+    #for line in lines:
+    #    textob.textLine(line)
+
+
+    pdf.setTitle(resumeName+'Resume')
+    #c.drawText(textob)
+    pdf.showPage()
+    pdf.save()
     buf.seek(0)
-    return FileResponse(buf, as_attachment=True, filename='something.pdf')
+    return FileResponse(buf, as_attachment=True, filename=fileName)
