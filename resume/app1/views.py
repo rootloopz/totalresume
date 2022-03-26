@@ -1,5 +1,3 @@
-from cProfile import label
-from tkinter import Label
 from unicodedata import name
 from django.shortcuts import render
 from django import forms
