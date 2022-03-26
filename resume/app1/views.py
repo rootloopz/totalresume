@@ -80,6 +80,20 @@ def user_logout(request):
     return redirect("/")
 
 ###Randall's Stuff###
+class Sub:
+    def __init__(self,title,titleSize,date,dateSize,desc,descSize):
+        self.title = title
+        self.titleSize = titleSize
+        self.date = date
+        self.dateSize = dateSize
+        self.desc = desc
+        self.descSize = descSize
+
+class Subject:
+    def __init__(self,title,entries):
+        self.title = title
+        self.entries = entries
+
 def drawRuler(pdf):
     pdf.setLineWidth(1)
     pdf.setStrokeColorRGB(0.54,0.54,0.54)
@@ -93,12 +107,20 @@ def drawRuler(pdf):
 def GetPDF(request):
     fileName = 'SomePDFName.pdf'
     resumeName = 'Randall Fowler'
-    contactInfo = '(916)856-4946'
+    contactInfo = '(530)420-6969'
     #subject object
     subject = ['Education']
     date = ['Fall 2019 - Spring 2022']
     description = ['Bachelors of Science, Computer Science - California State University, Chico\nGraduation expected in Spring 2023\nChico GPA: 3.66\nDean\'s list Spring 2021, Fall 2021']
+    #description = "\n".join(wrap(description, 500))
     placement = [[40,120]]
+    subjDividerY = [200]
+
+    # Education Subject Entries
+    EdSub1 = Sub("Bachelors at some school",14,"Some day",10,"A\nbunch\nof words..",12)
+    #Education = Subject("Education",[EdSub1,EdSub1])
+    Education = Subject("Education",[EdSub1])
+    subjects = [Education,Education,Education,Education,Education]
 
     #create byte stream buffer
     buf = io.BytesIO()
@@ -106,7 +128,7 @@ def GetPDF(request):
     pdf = canvas.Canvas(buf, pagesize=letter,bottomup=0)
 
     # 1) Draw Grid
-    drawRuler(pdf)  #used for creating templates
+    #drawRuler(pdf)  #used for creating templates
     
     # 2) Top Portion
     titleText = pdf.beginText()
@@ -124,45 +146,44 @@ def GetPDF(request):
     pdf.line(0,titleDivideLineY,630,titleDivideLineY)
 
     # 4) Main content
-    for i in range(len(subject)):
-        subjectText = pdf.beginText()
-        titleOffsetX = 200
-        subjectText.setTextOrigin(placement[i][0]+titleOffsetX,placement[i][1])
+    i = 0
+    subjectTitleX = 200 #constant
+    subjectTitleY = 120
+    subTitleX = 40 #constant
+    subTitleY = subjectTitleY + 30
+    dateX = 440 #constant
+    #dateY should be same as subTitleY
+    descX = 40  #constant
+    descY = subTitleY + 30
+    subjectText = pdf.beginText()
+    for subject in subjects:
+        #Grab Subject: print title
         subjectText.setFont("Helvetica",20)
-        subjectText.textLine(subject[i])
-
-        mainOffsetY = 30
-        dateOffsetX = 420
-        subjectText.setTextOrigin(placement[i][0]+dateOffsetX,placement[i][1]+mainOffsetY)
-        subjectText.setFont("Helvetica",12)
-        subjectText.textLine(date[i])
-
-        description
-        subjectText.setTextOrigin(placement[i][0],placement[i][1]+mainOffsetY)
-        #subjectText.setFont("Helvetica",12)
-        subjectText.textLine(description[i])
-
+        subjectText.setTextOrigin(subjectTitleX,subjectTitleY)
+        subjectText.textLines(subject.title)
+        for sub in subject.entries:
+            #grab subject: print title, date, description
+            #print title
+            subjectText.setFont("Helvetica",sub.titleSize)
+            subjectText.setTextOrigin(subTitleX,subTitleY)
+            subjectText.textLines(sub.title)
+            #print date
+            subjectText.setFont("Helvetica",sub.dateSize)
+            subjectText.setTextOrigin(dateX,subTitleY)
+            subjectText.textLines(sub.date)
+            #print description
+            subjectText.setFont("Helvetica",sub.descSize)
+            subjectText.setTextOrigin(descX,descY)
+            subjectText.textLines(sub.desc)
+            #change iter for entry
+            subTitleY = subTitleY + 90
+            descY = subTitleY + 10
+        subjectTitleY = subjectTitleY + len(subject.entries)*100
+        descY = subTitleY + 30
+        #pdf.line(20,subjectTitleY-25,592,subjectTitleY-25)
         pdf.drawText(subjectText)
 
-
-
-
-
-
-
-
-    #Create text object
-    #textob = pdf.beginText()
-    #textob.setTextOrigin(inch,inch)
-    #textob.setFont("Helvetica", 14)
-    #Add lines of text
-    #lines = ["This is line 1","This is line 2","This is line 3",]
-    #for line in lines:
-    #    textob.textLine(line)
-
-
     pdf.setTitle(resumeName+'Resume')
-    #c.drawText(textob)
     pdf.showPage()
     pdf.save()
     buf.seek(0)
