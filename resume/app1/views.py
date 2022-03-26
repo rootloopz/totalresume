@@ -7,6 +7,12 @@ from app1.forms import JoinForm, LoginForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+
 #this is the form for creating a new resume
 class CreateMasterResume(forms.Form):
     #education information
@@ -93,3 +99,23 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect("/")
+
+###Randall's Stuff###
+def GetPDF(request):
+    #create byte stream buffer
+    buf = io.BytesIO()
+    #Create canvas
+    c = canvas.Canvas(buf, pagesize=letter,bottomup=0)
+    #Create text object
+    textob = c.beginText()
+    textob.setTextOrigin(inch,inch)
+    textob.setFont("Helvetica", 14)
+    #Add lines of text
+    lines = ["This is line 1","This is line 2","This is line 3",]
+    for line in lines:
+        textob.textLine(line)
+    c.drawText(textob)
+    c.showPage()
+    c.save()
+    buf.seek(0)
+    return FileResponse(buf, as_attachment=True, filename='something.pdf')
