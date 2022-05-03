@@ -24,6 +24,5 @@ urlpatterns = [
     path('login/', app1_views.user_login),
     path('logout/', app1_views.user_logout),
     path("resume/", app1_views.NewResume),
-    path('resume/submit', app1_views.NewResume),
-    path('create_pdf/', app1_views.GetPDF)
+    path('resume/submit', app1_views.NewResume)
 ]
