@@ -3,11 +3,18 @@
     {% load static %}
         <div class="container">
             <div class="jumbotron m-3">
-                <h1 class="display-4">Master resume builder</h1>
+                <h1 class="display-4">TotalResume builder</h1>
                 <p class="lead">This app allows you to create one large resume and easily talor it to each job you apply to by selecting only the relivant jobs, skills, and experience</p>
                 <hr class="my-4">
             </div>
-            <p> </p>
-            <img src="{%static '/app1/unemployedman.jpg'%}" alt="Job Man gets a Job">
         </div>
+        <div class="container">
+        {% if user.is_authenticated %}
+        <a class="btn btn-primary btn-lg" href="/resume/test" role="button">Create your resume</a>
+        <a class="btn btn-primary btn-lg" href="/guide/" role="button">Guide</a>
+        {% else %}
+        <a class="btn btn-primary btn-lg" href="/login/" role="button">Login or sign-up to get started</a>
+        {% endif %}
+        </div>
+
 {% endblock %}

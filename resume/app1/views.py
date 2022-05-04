@@ -73,3 +73,6 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect("/")
+
+def resume(request):
+    return render(request, 'resume/resume.html')
