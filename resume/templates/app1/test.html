@@ -1,15 +1,27 @@
 {% extends "app1/pageTemplate.html" %}
 {% block body %}
-<div class="container">
     <div class="jumbotron">
-        <h1>Join</h1>
-        <form method="POST">{% csrf_token %}
-            <table>
-                {{ form.as_table }}
-                <tr>
-                    <td>
-                        <input type="submit" class="btn btn-primary" value="form" />
-                    </td>
-                </tr>
-            </table>
-            {% endblock %}
+        <h1>Fill out the fields below:</h1>
+        <form method="POST">
+        {% csrf_token %}
+        <div class="fieldWrapper">
+        <h4>Contact Details:</h4>
+        <p class="required">Full Name: {{ form.name }} </p>
+        <p>Email: {{ form.email }} </p>
+        <p>Phone Number: {{ form.number }} </p>
+
+        <h4>Education</h4>
+        <p>School Name: {{ form.school }} </p>
+        <p>GPA: {{ form.gpa }} </p>
+        <p> Start Year: {{ form.startYear }} End Year: {{ form.endYear }} </p>
+        <p>Honors, Extra, etc: {{ form.schoolextra }} </p>
+
+        <h4>Experience</h4>
+        <p>Employer: {{ form.employer }} </p>
+        <p>Location: {{ form.location }} </p>
+        <p> Start Year: {{ form.jobStartYear }} End Year: {{ form.jobEndYear }} </p>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit" />
+        </form>
+        {% endblock %}
+    </div>
