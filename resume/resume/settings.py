@@ -13,11 +13,11 @@ https://docs.djangoproject.com/en/3.0/ref/settings/uu
 
 import os
 from pathlib import Path
-from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'o54bl0f)1ng4$3bjc602r6ak$75gt%jp+h1dn&km7+hqmm!psc'
+
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_DIR = os.path.join(BASE_DIR, "static")

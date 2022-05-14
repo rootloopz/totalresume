@@ -5,23 +5,42 @@
         <form method="POST">
         {% csrf_token %}
         <div class="fieldWrapper">
-        <h4>Contact Details:</h4>
-        <p class="required">Full Name: {{ form.name }} </p>
-        <p>Email: {{ form.email }} </p>
-        <p>Phone Number: {{ form.number }} </p>
+        <h4>Contact Details</h4>
+        <p class="required">Full name: {{ form.name }} </p>
+        <p class="required">Email: {{ form.email }} </p>
+        <p class="required">Phone number: {{ form.number }} </p>
+        <p> Objective: </p>
+        <p>{{ form.objective }} </p>
+
 
         <h4>Education</h4>
-        <p>School Name: {{ form.school }} </p>
+        <p class="required">School Name: {{ form.school }} </p>
+        <p>Degree Type (Associates, Bachelors, etc): {{ form.degreeType }}</p>
         <p>GPA: {{ form.gpa }} </p>
-        <p> Start Year: {{ form.startYear }} End Year: {{ form.endYear }} </p>
+        <p class="required">Degree / Cert: {{ form.degree }} </p>
+        <p><span class="required">Start Year: {{ form.startYear }}</span> End Year: {{ form.endYear }} </p>
         <p>Honors, Extra, etc: {{ form.schoolextra }} </p>
 
         <h4>Experience</h4>
-        <p>Employer: {{ form.employer }} </p>
+        <p class="required">Job Title: {{ form.jobTitle }} </p>
+        <p class="required">Employer: {{ form.employer }} </p>
         <p>Location: {{ form.location }} </p>
-        <p> Start Year: {{ form.jobStartYear }} End Year: {{ form.jobEndYear }} </p>
+        <p> <span class="required"> Start Year: {{ form.jobStartYear }}</span> End Year: {{ form.jobEndYear }} </p>
+
+        <h4>Skills</h4>
+        <p>List skills: {{ form.skills }} </p>
+
+        <h4>Awards / Extra Curricular</h4>
+        <p>Awards: {{ form.awards }} </p>
+        <p>Extra curricular: {{ form.extraC }} </p>
+
+        <h4>Projects</h4>
+        <p>Project name: {{ form.projectName }} </p>
+        <p>Project description: {{ form.projectDesc }} </p>
+        
         </div>
-        <input type="submit" class="btn btn-primary" value="Submit" />
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+        
         </form>
-        {% endblock %}
     </div>
+        {% endblock %}

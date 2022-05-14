@@ -7,117 +7,103 @@
 	
     {% load static %}
 	<link rel="stylesheet" href="{%static 'resume.css'%}" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+	{% include "app1/bootstrap.html" %}
 </head>
 <body>
+	{% block body %}
+	{% include "app1/welcome_nav.html" %}
+<div id="canvas_div_pdf">
 	<div class="container">
 	<header>
-		<h1 id="name">Your Name</h1>
+		<h1 id="name">{{ res_list.name }}</h1>
 		
 		<div id="designation">
 		
-			<span class="title">your designation</span>
-			<span class="organization">The organisation name</span>
+			<span class="title">{{ res_list.number }}</span>
 		
 		</div>
 		
 		<div class="contact">
-			<div class="email">john@example.com</div>
+			<div class="email">{{ res_list.email }}</div>
 		</div>
 		
 	</header>
 	
 	<div class="content" role=main>
-	
+		{% if res_list.objective %}
 		<section id="objective">
 			<h2 class="title">Objective</h2>
 			<div class="description">
 				<p>
-					Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+					{{ res_list.objective }}
 				</p>			
 			</div> <!-- end description -->
 		</section>
+		{% endif %}
 		
 		
 		<section id="Education">
 			<h2 class="title">Education</h2>
 			<div class="description">
-				
-				<table>
-					<thead>
-						<td>Duration</td>
-						<td>Qualification</td>
-						<td>Institute/School</td>
-						<td>Result</td>
-					</thead>
+				<h4>{{res_list.school}} </h4>
+				<p> - {% if res_list.degreeType %}{{ res_list.degreeType}}, {% endif %}{{ res_list.degree }}. {% if res_list.gpa %} </em> GPA: {{ res_list.gpa }} </em> {% endif %} </p>
+				<p> {{res_list.startYear }} - {% if res_list.endYear %} 
+					{{res_list.endYear}}
+					{% else %}
+					Current
+					{% endif %}
+				</p>
 					
-					<!-- edit this/ row-wise-->
-					<tr>
-						<td>abc</td>
-						<td>abc</td>
-						<td>abc</td>
-						<td>abc</td>
-					</tr>
-					
-					<tr> <!-- row2 -->
-						<td>abc</td>
-						<td>abc</td>
-						<td>abc</td>
-						<td>abc</td>
-					</tr>					
-					
-				</table>
-			
-			
 			</div> <!-- end description -->
 		</section>
-			
+		<section>
+			<h2 class="title">Experience</h2>
+			<div class="description">
+				<h4>{{ res_list.jobTitle }} </h4>
+				<p> - {{ res_list.employer }}. {% if res_list.location %} </em> {{ res_list.location }} </em> {% endif %} </p>
+				<p> {{res_list.jobStartYear }} - {% if res_list.jobEndYear %} 
+					{{res_list.jobEndYear}}
+					{% else %}
+					Current
+					{% endif %}
+				</p>
+					
+			</div> <!-- end description -->
+		</section>
+		{%if res_list.projectName %}	
 		<section id="projects">
 			<h2 class="title">Projects Undertaken</h2>
 			<div class="description">
 				
 				<!-- Project 1 -->
 				<section class="project">
-					<h3 class="title">Title of the project</h3>
-					<div class="meta">
-						<span class="field">Project Field</span> <span class="date">Aug 2010 - Nov2010</span>
-					</div>
-					<p class="description"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
+					<h3 class="title"><em>{{res_list.projectName}} </em></h3>
+					<p class="description"> - {{ res_list.projectDesc }}</p>
 				</section> <!-- end project description -->
 				
-				<!-- project 2 -->
-				<section class="project">
-					<h3 class="title">Title of the project</h3>
-					<div class="meta">
-						<span class="field">Project Field</span> <span class="date">Aug 2010 - Nov2010</span>
-					</div>
-					<p class="description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-				</section> <!-- end project description -->
 
 
 				<!-- project 3 -->
-				<section class="project">
-					<h3 class="title">Title of the project</h3>
-					<div class="meta">
-						<span class="field">Project Field</span> <span class="date">Aug 2010 - Nov2010</span>
-					</div>
-					<p class="description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-				</section> <!-- end project description -->				
 				
 				</div> <!-- end description -->
-		</section>	
-	
-
-		<!-- Training/ seminars -->
-		
-		
-		
-		<!-- Scholistics Achievements -->
-		
-		
-		
+		</section>
+		{% endif %}
 		<!-- Technical Skills -->
+		{% if res_list.skills %}
+		<section>
+		<h2 class="title">Skills </h2>
+		<p> <strong> <em> - {{ res_list.skills }} </em> </strong> </p>
+		</section>
+		{% endif %}
 		
-		
+		{% if res_list.awards or res_list.extraC %}
+		<section>
+		<h2 class="title">Awards and extracariculars</h2>
+		<h3>Awards: <em> {{ res_list.awards }}</em> </h3>
+		<h3> Extracariculars: <em>{{ res_list.extraC }} </em> </h3>
+		</section>
+		{% endif %}
 		<!-- Extra-Curricular Activities -->
 		
 		
@@ -146,11 +132,14 @@
 	
 	
 	
-	
-	
-	
-	
 	</div> <!-- end container -->
-	
+</div>
+	{% endblock %}
+	<button onclick="html2pdf(element)">Generate PDF</button> 	
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
+<script>
+
+var element = document.getElementById('canvas_div_pdf');
+</script>
 </html>

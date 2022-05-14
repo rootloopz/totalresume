@@ -1,3 +1,4 @@
+import email
 import io
 from unicodedata import name
 from django.shortcuts import render, redirect
@@ -13,14 +14,25 @@ from app1.models import Resume
 # Create your views here.
 @login_required
 def NewResume(request):
+    print("new res")
     context = {}
     form = resumeForm(request.POST or None, request.FILES or None)
-
     if form.is_valid():
+        print("in form.save")
         form.save()
 
+        return HttpResponseRedirect('/resume/submit')
     context['form'] = form
     return render(request, 'app1/test.html', context)
+
+def renderResume(request):
+    res_object = Resume.objects.values()
+    res_list = [entry for entry in res_object]
+    print(res_list[:1]) #debug
+    if len(res_list) > 0:
+        res_list = res_list[-1]
+    
+    return render(request, 'resume/resume.html', {'res_list': res_list})
 
 def homepage(request):
     return render(request, "app1/welcome.html")
@@ -41,6 +53,7 @@ def join(request):
         page_data = { "join_form": join_form }
         return render(request, 'app1/join.html', page_data)
 
+# credit Brian Herring for login, logout, join 
 def user_login(request):
     if (request.method == 'POST'):
         login_form = LoginForm(request.POST)
